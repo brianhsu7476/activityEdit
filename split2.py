@@ -33,7 +33,7 @@ def write_to_xml(tree, file_path):
 
 # Example usage:
 # Parse the original XML file and strip any namespaces
-tree = parse_xml('Morning_Ride.gpx')
+tree = parse_xml('晨間跑步.gpx')
 a=tree.find('trk').find('trkseg').findall('trkpt')
 timestamp_format = "%Y-%m-%dT%H:%M:%SZ"
 
@@ -44,10 +44,11 @@ for i in a:
 	dt1 = datetime.strptime(a[0].find('time').text, timestamp_format)
 	dt2 = datetime.strptime(i.find('time').text, timestamp_format)
 	time_difference = (dt2 - dt1).total_seconds()
-	splitpt1=4*3600+42*60+36
-	splitpt2=5*3600+10*60+0
+	sttime=8*3600+5*60+25
+	splitpt1=10*3600+12*60+4-sttime
+	splitpt2=10*3600+13*60+39-sttime
 	if time_difference>splitpt1 and time_difference<splitpt2:
 		tree.find('trk').find('trkseg').remove(i)
 # Write the parsed tree back to XML with the same structure and no namespaces
-write_to_xml(tree, 'output.gpx')
+write_to_xml(tree, 'split2-output.gpx')
 
